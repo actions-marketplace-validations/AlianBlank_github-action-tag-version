@@ -25,11 +25,26 @@ async function main() {
 
     // 将更新后的package.json文件写入磁盘
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
-
     // 将package.json文件添加到暂存区
     await exec(`git add package.json`);
     // 提交修改
     await exec(`git commit -m '${CommitMessage}'`);
+    // 先推送本地提交到远程
+    await exec(`git push origin ${branch_name} --verbose`);
+    // 删除远程tag
+    await exec(`git push origin --delete refs/tags/${Version} --verbose`).catch(() => {
+        // 如果远程tag不存在，忽略错误
+        console.log(`远程tag ${Version} 不存在，跳过删除操作`);
+    });
+    // 删除本地tag
+    await exec(`git tag --delete ${Version} --verbose`).catch(() => {
+        // 如果本地tag不存在，忽略错误
+        console.log(`本地tag ${Version} 不存在，跳过删除操作`);
+    });
+    // 创建新tag
+    await exec(`git tag --annotate ${Version} --message "Version ${Version}" --verbose`);
+    // 推送tag到远程
+    await exec(`git push origin refs/tags/${Version} --verbose`);
 }
 
 main().catch(error => core.setFailed(error.message));
