@@ -30,7 +30,7 @@ async function main() {
     // 提交修改
     await exec(`git commit -m '${CommitMessage}'`);
     // 先推送本地提交到远程
-    await exec(`git push origin ${branch_name} --verbose`);
+    await exec(`git push --verbose`);
     // 删除远程tag
     await exec(`git push origin --delete refs/tags/${Version} --verbose`).catch(() => {
         // 如果远程tag不存在，忽略错误
