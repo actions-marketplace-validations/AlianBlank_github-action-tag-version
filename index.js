@@ -32,19 +32,19 @@ async function main() {
     // 先推送本地提交到远程
     // await exec(`git push --verbose`);
     // 删除远程tag
-    await exec(`git push origin --delete refs/tags/${Version} --verbose`).catch(() => {
+    await exec(`git push origin --delete refs/tags/${Version}`).catch(() => {
         // 如果远程tag不存在，忽略错误
         console.log(`远程tag ${Version} 不存在，跳过删除操作`);
     });
     // 删除本地tag
-    await exec(`git tag --delete ${Version} --verbose`).catch(() => {
+    await exec(`git tag --delete ${Version}`).catch(() => {
         // 如果本地tag不存在，忽略错误
         console.log(`本地tag ${Version} 不存在，跳过删除操作`);
     });
     // 创建新tag
-    await exec(`git tag --annotate ${Version} --message "Version ${Version}" --verbose`);
+    await exec(`git tag --annotate ${Version} --message "Version ${Version}"`);
     // 推送tag到远程
-    await exec(`git push origin refs/tags/${Version} --verbose`);
+    await exec(`git push origin refs/tags/${Version}`);
 }
 
 main().catch(error => core.setFailed(error.message));
