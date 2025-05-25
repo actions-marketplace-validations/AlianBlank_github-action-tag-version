@@ -48,8 +48,8 @@ async function main() {
     }
     
     // 推送commit和tag到远程
-    await exec('git push');
-    await exec(`git push origin ${Version}`);
+    // await exec('git push');
+    // await exec(`git push origin ${Version}`);
     
     // 验证远程tag是否存在
     const { stdout: remoteTags } = await exec('git ls-remote --tags origin');
