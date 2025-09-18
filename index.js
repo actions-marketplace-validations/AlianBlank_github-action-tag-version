@@ -7,7 +7,7 @@ const fs = require('fs')
 async function main() {
     const Version = core.getInput("version") || '1.0.0';
     // const branch_name = core.getInput("branch_name") || 'main';
-    const CommitMessage = (core.getInput("commit") || '[修改] 修改版本号为') + Version;
+    const CommitMessage = (core.getInput("commit") || 'chore: 修改版本号为') + Version;
 
     const packageJsonPath = './package.json'
 
