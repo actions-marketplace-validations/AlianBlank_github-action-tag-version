@@ -9,7 +9,7 @@ inputs:
   commit:
     description: "修改版本号提交日志"
     required: false
-    default: "[修改] 修改版本号为"
+    default: "chore: 修改版本号为"
 runs:
   using: "node20"
   main: "index.js"
